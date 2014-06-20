@@ -26,3 +26,11 @@ You can use this tool with crontab, so that the result will be updated automatic
 
 For example, run the web version every hour :
 `00  * * * * /home/root/TUSUIA/webVersion/run.sh`
+
+## Requirement
+
+To analysis user info, you will need `finger` tool
+
+To analysis network info, you will need `vnstat` tool
+
+Most of the remaining tools we used are built-in tool.
