@@ -18,12 +18,13 @@ SYSTIME=`uptime | awk '{print $2, $3, $4, $5}' | sed 's/,//g'`
 
 #Mem info
 if [ `uname` = "Linux" ];then
-  MEMORYINFO=$(top -b | head -n 4 | tail -n 1 | sed s/,//g | \
-             awk '{print $2 "</td><td align=right width=120px>" $3" "$1" "$4 "</td><td align=right width=120px>" \
-             $5" "$1" "$6"</td><td align=right width=120px>"$7" "$1" "$8}')
-  SWAPINFO=$(top -b | head -n 5 | tail -n 1 | sed s/,//g | \
-           awk '{print $2 "</td><td align=right width=120px>" $3" "$1" "$4 "</td><td align=right width=120px>" \
-           $5" "$1" "$6 "</td><td alig=right width=120px>"$7" "$1" "$8}')
+  MEMORYINFO=$(free -h | sed -n '2p' | \
+             awk '{print $1 "</td><td align=right width=100px>" $2 " total</td><td align=right width=100px>" \
+             $3" used</td><td align=right width=100px>"$4" free</td><td align=right width=100px>" \
+             $5" shared</td><td align=right width=130px>"$6" buffers</td><td align=right width=130px>"$7" cached" }')
+  SWAPINFO=$(free -h | sed -n '4p' | \
+           awk '{print $1 "</td><td align=right width=100px>" $2 " total</td><td align=right width=100px>" \
+           $3" used</td><td align=right width=100px>"$4" free"}')
   CPUUSAGE=$(top -b -n 1| head -n 3 | tail -n 1 | \
            awk '{print "usr:" $2 "%</td><td width=100px>sys:" $4 "%</td><td width=100px>idle:"$8"%"}')
   MODELNAME=$(cat /proc/cpuinfo | sed -n '2p'  | awk 'BEGIN {FS=": "}{print $1 ":</td><td>" $2}')
@@ -168,14 +169,14 @@ TRAFFIC_MONTH=$(echo ${TRAFFIC}| \
         <img height=9 src='img/plus.gif' width=9 border=0>Memory information:</a></p>
         <div id=block_mem style='display: none'>
         <table>
-        <tr><td width=130px> $MEMORYINFO </td><tr>
+        <tr><td width=70px> $MEMORYINFO </td><tr>
         </table>
         </div>
         <p><a style='text-decoration: none' href='javascript:extend(\"block_swap\")'>
         <img height=9 src='img/plus.gif' width=9 border=0>Swap usage:</a></p>
         <div id=block_swap style='display: none'>
         <table>
-        <tr><td width=130px> $SWAPINFO </td><tr>
+        <tr><td width=70px> $SWAPINFO </td><tr>
         </table>
         </div>
         <p><a style='text-decoration: none' href='javascript:extend(\"block_traffic\")'>

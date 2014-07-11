@@ -37,10 +37,9 @@ if [ `uname` == "FreeBSD" ]; then
                      awk '{print "usr: " $17 "%","   sys: " $18"%", "    idle: " $19"%"}'`
 else
     LINUX_SYSVERSION=`lsb_release -d | awk '{print $2, $3, $4, $5}'`
-    LINUX_MEMINFO=`top | head -n 4 | tail -n 1 | \
-                  awk '{print $1,$2,$4 " total,  "$6" used,  "$8" free,  "$10" buffers"}'`
-    LINUX_SWAPINFO=`top | head -n 5 | tail -n 1 | \
-                    awk '{print $1" Swap: "$3 " total,  "$5" used,  "$7" free,  "$9" cached"}'`
+    LINUX_MEMINFO=`free -h | sed -n '2p' | awk '{printf \
+                  ("%-5s%10s total%11s used%11s free%9s shared%8s buffers%9s cached\n",$1,$2,$3,$4,$5,$6,$7)}'`
+    LINUX_SWAPINFO=`free -h | sed -n '4p' | awk '{printf("%-s%10s total%11s used%11s free\n",$1,$2,$3,$4) }'`
     CPUINFO=`cat /proc/cpuinfo`
     CPUUSAGE=`top | head -n 3 | tail -n 1 | \
              awk '{print "usr: " $2 "%",  "    sys: " $4 "%", "    idle: " $8 "%"}'`
