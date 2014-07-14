@@ -11,13 +11,16 @@ else
     ECHO="/bin/echo"
 fi
 
-${ECHO} -e "Analyzing started, it may take a while, please wait ... "
-
 if [ `whoami` == "root" ];then
+    NUMOFUSER=`echo -e "${ALLUSER}" | wc -l | awk '{print $1}'`
+    ${ECHO} "program will analyze $NUMOFUSER user who has login in this month."
     users=$(last | awk '{if (( NF >= 10 ) && ($1 != "reboot")) print $1}'| sort | uniq)
 else
     users=`whoami`
+    ${ECHO} "You do not have root permission, program will not scan all the user info but only yours."
 fi
+
+${ECHO} -e "Analyzing started, it may take a while, please wait "
 
 DIRECTORY="results/users"
 
@@ -28,8 +31,18 @@ fi
 
 mkdir -p ${DIRECTORY}
 
+PROGRESSCOUNTER=0
+
 for username in $users               #for loop
 do
+
+    PROGRESSCOUNTER=$(($PROGRESSCOUNTER +1))
+    if [ $(($PROGRESSCOUNTER%10)) == 0 ]; then
+      echo -n " $PROGRESSCOUNTER "
+    elif [ $(($PROGRESSCOUNTER%10%3)) == 0 ]; then
+      echo -n "."
+    fi
+
     USER=$username
     HOME=`eval echo ~${USER}`
     TEMP="${DIRECTORY}/${USER}Data.txt"
@@ -81,19 +94,17 @@ do
         FREQUENCY=`echo $(bc<<<"scale=3;$LOGINRECORD/$DAYOFMONTH" | awk '{printf "%1.3f", $0}')`
         LASTCOMMAND=`wc -l ${LATESTHISTORY} | awk '{print $1}'`
 
-        ${ECHO} -e "Analysis information about user '\e[1;36;40m${USER}\e[0m' ... ";
-        
-        ${ECHO} -e "\nAnalysis information about user ${USER}:
+        ${ECHO} -e "\nAnalysis information about user \"${USER}\":
 Amount of directories under user's home: \t${NUMOFDIR}
 Amount of files under user's home: \t\t${NUMOFFLE}
 Default shell of this user: \t\t\t${SHELL}
 Last login time: \t\t\t\t${LASTLOGIN}
 Login times of this month: \t\t\t${LOGINRECORD}
 Login frequency of this month: \t\t\t${FREQUENCY} time(s)/day
-Disk space used: \t\t\t\t${SPACE}
-Most commonly used commands(analyzed by last ${LASTCOMMAND} commands in record):\n${FAVCOMMAND}
+Disk space used: \t\t\t\t${SPACE}\n
+Most commonly used commands(analyzed by last ${LASTCOMMAND} commands in record):\n${FAVCOMMAND}\n
 Currently running process:\n ${PROCESS}" >> $TEMP
     fi
 done
 
-${ECHO} -e "Done.\n"
+${ECHO} -e "Done."
