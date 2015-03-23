@@ -146,7 +146,7 @@ for username in $ALLUSER
     fi
 
     echo "<html><head><meta http-equiv='content-Type' content='text/html; charset=UTF-8' />
-          <title>CS312A - Introduction to UNIX System - Team project</title>
+          <title>`hostname` - User behavior analysis</title>
           <link rel='stylesheet' media='screen,print' href='../css/layout.css' />
           <script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js'></script>
           <script type='text/javascript' src='//cdn.jsdelivr.net/highcharts/4.0.1/highcharts.js'></script>
