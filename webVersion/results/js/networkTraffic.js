@@ -28,7 +28,7 @@ $(function () {
     tooltip: {
       headerFormat: '<span>{point.key}</span><table>',
       pointFormat: '<tr><td style="color:{series.color};padding:0 5 0 5">{series.name}: </td>' +
-                   '<td style="padding:0 5 0 5 "><b>{point.y:.1f}</td><td>MiB</b></td></tr>',
+                   '<td style="padding:0 5 0 5 "><b>{point.y:f}</td><td>MiB</b></td></tr>',
       footerFormat: '</table>',
       shared: true,
       useHTML: true
