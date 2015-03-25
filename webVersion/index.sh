@@ -61,7 +61,7 @@ HOSTNAME=`hostname -s`
 SYSNAME=`uname -s`
 SYSPLATFORM=`uname -m`
 KERNELVERSION=`uname -r`
-LOADAVG=`uptime | awk '{print $10" "$11" "$12}'`
+LOADAVG=`uptime | awk '{if(NF==12){print $10" "$11" "$12} else if(NF==11){print $9" "$10" "$11} else if(NF==10){print $8" "$9" "$10}}'`
 FILESYS_HEAD=$(df -h /etc |sed -n '1p'| awk '{print $1 "</td><td align=right width=120>" $2 "</td><td align=right width=120>" \
              $3 "</td><td align=right width=120>"$4"</td><td align=right width=120>" $5"</td><td align=right width=120>" $6}')
 FILESYS_CONTENT=$(df -h /etc |sed -n '2p'| awk '{print $1 "</td><td align=right width=120>" $2 "</td><td align=right width=120>" \
