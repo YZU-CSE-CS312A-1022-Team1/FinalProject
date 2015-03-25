@@ -6,12 +6,12 @@ We want to provide a easy way for users and admins to get the useful info from t
 
 ## File structure
 
-
+```
 |__project's root
   |__draftScripts - temperary scripts
   |__textVersion  - text version scripts
   |__webVersion   - web version scripts
-
+```
 ## Usage
 
 extract the tarball or clone the project from github, get into the directory
