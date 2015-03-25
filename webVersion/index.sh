@@ -14,7 +14,7 @@ fi
 USERLOGIN=`last | awk '{if($8 == "still"){print $1}}' | uniq | wc -l `
 
 #add uptime
-SYSTIME=`uptime | awk '{print $2, $3, $4, $5}' | sed 's/,//g'`
+SYSTIME=`uptime | awk '{if(NF==12){print $2" "$3" "$4" "$5 } else if(NF==11){print $2" "$3" "$4} else if(NF==10){print $2" "$3}}' | sed 's/,//g'`
 
 #Mem info
 if [ `uname` = "Linux" ];then
