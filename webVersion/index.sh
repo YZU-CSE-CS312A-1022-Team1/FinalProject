@@ -82,7 +82,7 @@ TRAFFIC_MONTH=$(echo ${TRAFFIC}| \
   echo "<html><head><meta http-equiv='content-Type' content='text/html; charset=UTF-8' />
         <title>`hostname` - User behavior analysis</title>
         <link rel='stylesheet' media='screen,print' href='css/layout.css' />
-        <script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js'></script>
+        <script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js'></script>
         <script type='text/javascript' src='userList.json'></script>
         <script type='text/javascript' src='js/userList.js'></script>
         <script language=javascript>
