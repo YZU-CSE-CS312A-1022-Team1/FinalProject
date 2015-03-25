@@ -1,5 +1,7 @@
 #! /bin/sh
 
+cd `dirname "$0"`
+
 if [ `uname` = "FreeBSD" ];then
     ECHO="echo"
 else
