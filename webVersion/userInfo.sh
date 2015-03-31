@@ -5,7 +5,7 @@ mkdir -p $DIR && cd $DIR
 
 WHO=`whoami`
 if [ $WHO == "root" ]; then
-  ALLUSER=`last | awk '{if (( NF >= 10 ) && ($1 != "reboot")) print $1}'| sort | uniq`
+  ALLUSER=`last | awk '{if (( NF >= 10 ) && ($1 != "reboot")) print $1}'| sort -r | uniq`
   USERLIST=($ALLUSER)
 else
   USERLIST=($USER)
