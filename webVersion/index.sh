@@ -26,7 +26,8 @@ if [ `uname` = "Linux" ];then
            awk '{print $1 "</td><td align=right width=100px>" $2 " total</td><td align=right width=100px>" \
            $3" used</td><td align=right width=100px>"$4" free"}')
   CPUUSAGE=$(top -b -n 1| head -n 3 | tail -n 1 | \
-           awk '{print "usr:" $2 "%</td><td width=100px>sys:" $4 "%</td><td width=100px>idle:"$8"%"}')
+           awk '{usr="";sys="";idle="";}{if(NF==17){usr=$2;sys=$4;idle=$8;}else{usr=$2;sys=$4;idle=100;}} \
+           {print "usr:"usr"%</td><td width=100px>sys:"sys"%</td><td width=100px>idle:"idle"%"}')
   MODELNAME=$(cat /proc/cpuinfo | sed -n '2p'  | awk 'BEGIN {FS=": "}{print $1 ":</td><td>" $2}')
   FEATURES=$(cat /proc/cpuinfo | sed -n '3p'  | awk 'BEGIN {FS=": "}{print $1 ":</td><td>" $2}')
   CPUIMPLEMENTER=$(cat /proc/cpuinfo | sed -n '4p'  | awk 'BEGIN {FS=": "}{print $1 ":</td><td>" $2}')
