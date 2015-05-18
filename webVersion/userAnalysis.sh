@@ -80,19 +80,19 @@ countWeeklyLoginTimes(){
   do
     case $DAY in
       "Mon")
-        DAYLOGIN[0]=$(( ${DAYLOGIN[0]} +1 ));;
+        WEEKLOGIN[0]=$(( ${WEEKLOGIN[0]} +1 ));;
       "Tue")
-        DAYLOGIN[1]=$(( ${DAYLOGIN[1]} +1 ));;
+        WEEKLOGIN[1]=$(( ${WEEKLOGIN[1]} +1 ));;
       "Wed")
-        DAYLOGIN[2]=$(( ${DAYLOGIN[2]} +1 ));;
+        WEEKLOGIN[2]=$(( ${WEEKLOGIN[2]} +1 ));;
       "Thu")
-        DAYLOGIN[3]=$(( ${DAYLOGIN[3]} +1 ));;
+        WEEKLOGIN[3]=$(( ${WEEKLOGIN[3]} +1 ));;
       "Fri")
-        DAYLOGIN[4]=$(( ${DAYLOGIN[4]} +1 ));;
+        WEEKLOGIN[4]=$(( ${WEEKLOGIN[4]} +1 ));;
       "Sat")
-        DAYLOGIN[5]=$(( ${DAYLOGIN[5]} +1 ));;
+        WEEKLOGIN[5]=$(( ${WEEKLOGIN[5]} +1 ));;
       "Sun")
-        DAYLOGIN[6]=$(( ${DAYLOGIN[6]} +1 ));;
+        WEEKLOGIN[6]=$(( ${WEEKLOGIN[6]} +1 ));;
     esac
   done
 }
