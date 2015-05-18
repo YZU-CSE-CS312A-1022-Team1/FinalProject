@@ -22,12 +22,6 @@ if [ -e ${JSONFILE} ]; then
 fi
 exportUserAccount
 
-#generate a directory to place the pages
-#DIRECTORY="userInfo"
-#if [ ! -d ${DIRECTORY} ]; then
-#  mkdir ${DIRECTORY}
-#fi
-
 #Determine whether executor is root or not
 #Get user accounts login in this month
 WHO=`whoami`
