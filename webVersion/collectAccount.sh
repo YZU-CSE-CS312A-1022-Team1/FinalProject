@@ -26,7 +26,7 @@ fi
 WHO=`whoami`
 if [ $WHO == "root" ]; then
   USERLIST=(`last | awk '{if (( NF >= 10 ) && ($1 != "reboot")) print $1}'| sort -r | uniq`)
-  NUMOFUSER=`echo -e "${#USERLIST[@]}" | wc -l | awk '{print $1}'`
+  NUMOFUSER=${#USERLIST[@]}
   echo "program will analyze $NUMOFUSER user who has login in this month."
   echo "please wait "
 else
