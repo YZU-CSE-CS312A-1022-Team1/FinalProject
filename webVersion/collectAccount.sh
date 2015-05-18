@@ -20,7 +20,6 @@ JSONFILE="userList.json"
 if [ -e ${JSONFILE} ]; then
   rm ${JSONFILE}
 fi
-exportUserAccount
 
 #Determine whether executor is root or not
 #Get user accounts login in this month
@@ -34,6 +33,7 @@ else
   USERLIST=($USER)
   echo "You do not have root permission, program will not scan all the user info but only yours."
 fi
+exportUserAccount
 
 #Call userAnalysis.sh to analyze user information
 if [ ${#USERLIST[@]} == 0 ]; then
