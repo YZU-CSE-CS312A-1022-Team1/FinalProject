@@ -17,8 +17,8 @@ ${DAYLOGIN[13]},${DAYLOGIN[14]},${DAYLOGIN[15]},${DAYLOGIN[16]},${DAYLOGIN[17]},
 ${DAYLOGIN[20]},${DAYLOGIN[21]},${DAYLOGIN[22]},${DAYLOGIN[23]}];" >> ${HTMLFILE}
 }
 exportWeeklyLoginTimes(){
-echo "var login_times_week=[${DAYLOGIN[0]},${DAYLOGIN[1]},${DAYLOGIN[2]},${DAYLOGIN[3]},\
-${DAYLOGIN[4]},${DAYLOGIN[5]},${DAYLOGIN[6]}];" >> ${HTMLFILE}
+echo "var login_times_week=[${WEEKLOGIN[0]},${WEEKLOGIN[1]},${WEEKLOGIN[2]},${WEEKLOGIN[3]},\
+${WEEKLOGIN[4]},${WEEKLOGIN[5]},${WEEKLOGIN[6]}];" >> ${HTMLFILE}
 }
 countDailyLoginTimes(){
   for HOUR in $LOGINHOUR
