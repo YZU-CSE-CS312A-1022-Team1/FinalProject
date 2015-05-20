@@ -1,9 +1,10 @@
 #!/bin/bash
 
-exportLoginSpaceCommandRank(){
-  nameOfVar=("login_rank_user" "login_times" "space_rank_user" "space_usage" "commands" "command_times" )
+exportLoginDistributionAndRankings(){
+  nameOfVar=("login_rank_user" "login_times" "space_rank_user" "space_usage" "commands" "command_times" \
+             "login_times_day" "login_times_week")
   listOfList=(${LOGINRANK_USER[@]} ${LOGINRANK_TIMES[@]} ${SPACERANK_USER[@]} ${SPACERANK_USEAGE[@]} \
-              ${COMMANDRANK_COMMAND[@]} ${COMMANDRANK_TIMES[@]} )
+              ${COMMANDRANK_COMMAND[@]} ${COMMANDRANK_TIMES[@]} ${DAYLOGIN[@]} ${WEEKLOGIN[@]})
   counter=0
   indexOfList=0
   for (( index=0; index<${#listOfList[@]} ; index++ )); do
@@ -34,22 +35,20 @@ exportLoginSpaceCommandRank(){
       counter=0
     elif [ $indexOfList == 5 ] && [ $counter == ${#COMMANDRANK_TIMES[@]} ]; then
       echo "${listOfList[$index]}];" >> ${HTMLFILE}
-    elif [ $(($indexOfList%2)) == 0 ]; then
+      indexOfList=$(($indexOfList+1))
+      counter=0
+    elif [ $indexOfList == 6 ] && [ $counter == ${#DAYLOGIN[@]} ]; then
+      echo "${listOfList[$index]}];" >> ${HTMLFILE}
+      indexOfList=$(($indexOfList+1))
+      counter=0
+    elif [ $indexOfList == 7 ] && [ $counter == ${#WEEKLOGIN[@]} ]; then
+      echo "${listOfList[$index]}];" >> ${HTMLFILE}
+    elif [ $(($indexOfList%2)) == 0 ] && [ $indexOfList -ne 6 ]; then
       echo -n "'${listOfList[$index]}', " >> ${HTMLFILE}
     else
       echo -n "${listOfList[$index]}, " >> ${HTMLFILE}
     fi
   done
-}
-exportDailyLoginTimes(){
-echo "var login_times_day=[${DAYLOGIN[0]},${DAYLOGIN[1]},${DAYLOGIN[2]},${DAYLOGIN[3]},${DAYLOGIN[4]},${DAYLOGIN[5]},\
-${DAYLOGIN[6]},${DAYLOGIN[7]},${DAYLOGIN[8]},${DAYLOGIN[9]},${DAYLOGIN[10]},${DAYLOGIN[11]},${DAYLOGIN[12]},\
-${DAYLOGIN[13]},${DAYLOGIN[14]},${DAYLOGIN[15]},${DAYLOGIN[16]},${DAYLOGIN[17]},${DAYLOGIN[18]},${DAYLOGIN[19]},\
-${DAYLOGIN[20]},${DAYLOGIN[21]},${DAYLOGIN[22]},${DAYLOGIN[23]}];" >> ${HTMLFILE}
-}
-exportWeeklyLoginTimes(){
-  echo "var login_times_week=[${WEEKLOGIN[0]},${WEEKLOGIN[1]},${WEEKLOGIN[2]},${WEEKLOGIN[3]},\
-${WEEKLOGIN[4]},${WEEKLOGIN[5]},${WEEKLOGIN[6]}];" >> ${HTMLFILE}
 }
 countDailyLoginTimes(){
   DAYLOGIN=(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
@@ -222,10 +221,8 @@ echo "<html><head><meta http-equiv='content-Type' content='text/html; charset=UT
       var username = JSON.parse(userlist);
       " >> ${HTMLFILE}
 
-exportDailyLoginTimes
-exportWeeklyLoginTimes
 echo "var total_commands = $TOTAL;"           >> ${HTMLFILE}
-exportLoginSpaceCommandRank
+exportLoginDistributionAndRankings
 
 echo "</script>
       </head>
