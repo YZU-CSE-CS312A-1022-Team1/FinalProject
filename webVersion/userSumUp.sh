@@ -1,46 +1,36 @@
 #!/bin/bash
 
-exportLoginRank(){
- echo -n "var login_rank_user = ["        >> ${HTMLFILE}
-  for (( i=0; i<${#LOGINRANK_USER[@]}; i++ )); do
-    if [ $i != $((${#LOGINRANK_USER[@]} -1)) ]; then
-      echo -n "\"${LOGINRANK_USER[$i]}\",">> ${HTMLFILE}
-    else
-      echo -n "\"${LOGINRANK_USER[$i]}\"" >> ${HTMLFILE}
+exportLoginAndSpaceRank(){
+  nameOfVar=("login_rank_user" "login_times" "space_rank_user" "space_usage" )
+  listOfList=(${LOGINRANK_USER[@]} ${LOGINRANK_TIMES[@]} ${SPACERANK_USER[@]} ${SPACERANK_USEAGE[@]} )
+  counter=0
+  indexOfList=0
+  for (( index=0; index<${#listOfList[@]} ; index++)); do
+    if [ $counter == 0 ]; then
+      echo -n "var ${nameOfVar[$indexOfList]} = [" >> ${HTMLFILE}
     fi
-  done
-  echo "];" >> ${HTMLFILE}
+    counter=$(( $counter +1 ))
 
-  echo -n "var login_times = ["           >> ${HTMLFILE}
-  for (( i=0; i<${#LOGINRANK_TIMES[@]}; i++ )); do
-    if [ $i != $((${#LOGINRANK_TIMES[@]} -1)) ]; then
-      echo -n "${LOGINRANK_TIMES[$i]},"   >> ${HTMLFILE}
+    if [ $indexOfList == 0 ] && [ $counter == ${#LOGINRANK_USER[@]} ]; then
+      echo "'${listOfList[$index]}'];" >> ${HTMLFILE}
+      indexOfList=$(($indexOfList+1))
+      counter=0
+    elif [ $indexOfList == 1 ] && [ $counter == ${#LOGINRANK_TIMES[@]} ]; then
+      echo "${listOfList[$index]}];" >> ${HTMLFILE}
+      indexOfList=$(($indexOfList+1))
+      counter=0
+    elif [ $indexOfList == 2 ] && [ $counter == ${#SPACERANK_USER[@]} ]; then
+      echo "'${listOfList[$index]}'];" >> ${HTMLFILE}
+      indexOfList=$(($indexOfList+1))
+      counter=0
+    elif [ $indexOfList == 3 ] && [ $counter == ${#SPACERANK_USEAGE[@]} ]; then
+      echo "${listOfList[$index]}];" >> ${HTMLFILE}
+    elif [ $(($indexOfList%2)) == 0 ]; then
+      echo -n "'${listOfList[$index]}', " >> ${HTMLFILE}
     else
-      echo -n "${LOGINRANK_TIMES[$i]}"    >> ${HTMLFILE}
+      echo -n "${listOfList[$index]}, " >> ${HTMLFILE}
     fi
   done
-  echo "];" >> ${HTMLFILE}
-}
-exportSpaceRank(){
-  echo -n "var space_rank_user = ["       >> ${HTMLFILE}
-  for (( i=0; i<${#SPACERANK_USER[@]}; i++ )); do
-    if [ $i != $((${#SPACERANK_USER[@]} -1)) ]; then
-      echo -n "\"${SPACERANK_USER[$i]}\",">> ${HTMLFILE}
-    else
-      echo -n "\"${SPACERANK_USER[$i]}\"" >> ${HTMLFILE}
-    fi
-  done
-  echo "];" >> ${HTMLFILE}
-
-  echo -n "var space_usage = ["           >> ${HTMLFILE}
-  for (( i=0; i<${#SPACERANK_USEAGE[@]}; i++ )); do
-    if [ $i != $((${#SPACERANK_USEAGE[@]} -1)) ]; then
-      echo -n "${SPACERANK_USEAGE[$i]},"  >> ${HTMLFILE}
-    else
-      echo -n "${SPACERANK_USEAGE[$i]}"   >> ${HTMLFILE}
-    fi
-  done
-  echo "];" >> ${HTMLFILE}
 }
 exportCommandRank(){
   echo "var commands=['${COMMANDRANK_COMMAND[0]}','${COMMANDRANK_COMMAND[1]}','${COMMANDRANK_COMMAND[2]}',\
@@ -231,12 +221,11 @@ echo "<html><head><meta http-equiv='content-Type' content='text/html; charset=UT
       var username = JSON.parse(userlist);
       " >> ${HTMLFILE}
 
-exportLoginRank
 exportDailyLoginTimes
 exportWeeklyLoginTimes
 echo "var total_commands = $TOTAL;"           >> ${HTMLFILE}
 exportCommandRank
-exportSpaceRank
+exportLoginAndSpaceRank
 
 echo "</script>
       </head>
@@ -290,4 +279,3 @@ echo "</script>
       "  >> ${HTMLFILE}
 
 rm $TEMP_COMMAND $TEMP_SPACE
-
