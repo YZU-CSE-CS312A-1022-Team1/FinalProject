@@ -130,7 +130,7 @@ countWeeklyLoginTimes(){
 }
 
 DIR="results"
-HTMLFILE="userSumUp_test.html"
+HTMLFILE="userSumUp.html"
 mkdir -p $DIR && cd $DIR
 
 #Sorted user login times
