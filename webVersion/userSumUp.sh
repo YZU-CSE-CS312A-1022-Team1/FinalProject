@@ -1,11 +1,12 @@
 #!/bin/bash
 
-exportLoginAndSpaceRank(){
-  nameOfVar=("login_rank_user" "login_times" "space_rank_user" "space_usage" )
-  listOfList=(${LOGINRANK_USER[@]} ${LOGINRANK_TIMES[@]} ${SPACERANK_USER[@]} ${SPACERANK_USEAGE[@]} )
+exportLoginSpaceCommandRank(){
+  nameOfVar=("login_rank_user" "login_times" "space_rank_user" "space_usage" "commands" "command_times" )
+  listOfList=(${LOGINRANK_USER[@]} ${LOGINRANK_TIMES[@]} ${SPACERANK_USER[@]} ${SPACERANK_USEAGE[@]} \
+              ${COMMANDRANK_COMMAND[@]} ${COMMANDRANK_TIMES[@]} )
   counter=0
   indexOfList=0
-  for (( index=0; index<${#listOfList[@]} ; index++)); do
+  for (( index=0; index<${#listOfList[@]} ; index++ )); do
     if [ $counter == 0 ]; then
       echo -n "var ${nameOfVar[$indexOfList]} = [" >> ${HTMLFILE}
     fi
@@ -25,20 +26,20 @@ exportLoginAndSpaceRank(){
       counter=0
     elif [ $indexOfList == 3 ] && [ $counter == ${#SPACERANK_USEAGE[@]} ]; then
       echo "${listOfList[$index]}];" >> ${HTMLFILE}
+      indexOfList=$(($indexOfList+1))
+      counter=0
+    elif [ $indexOfList == 4 ] && [ $counter == ${#COMMANDRANK_COMMAND[@]} ]; then
+      echo "'${listOfList[$index]}'];" >> ${HTMLFILE}
+      indexOfList=$(($indexOfList+1))
+      counter=0
+    elif [ $indexOfList == 5 ] && [ $counter == ${#COMMANDRANK_TIMES[@]} ]; then
+      echo "${listOfList[$index]}];" >> ${HTMLFILE}
     elif [ $(($indexOfList%2)) == 0 ]; then
       echo -n "'${listOfList[$index]}', " >> ${HTMLFILE}
     else
       echo -n "${listOfList[$index]}, " >> ${HTMLFILE}
     fi
   done
-}
-exportCommandRank(){
-  echo "var commands=['${COMMANDRANK_COMMAND[0]}','${COMMANDRANK_COMMAND[1]}','${COMMANDRANK_COMMAND[2]}',\
-'${COMMANDRANK_COMMAND[3]}','${COMMANDRANK_COMMAND[4]}','${COMMANDRANK_COMMAND[5]}','${COMMANDRANK_COMMAND[6]}',\
-'${COMMANDRANK_COMMAND[7]}','${COMMANDRANK_COMMAND[8]}','${COMMANDRANK_COMMAND[9]}'];" >> ${HTMLFILE}
-  echo "var command_times=[${COMMANDRANK_TIMES[0]},${COMMANDRANK_TIMES[1]},${COMMANDRANK_TIMES[2]},\
-${COMMANDRANK_TIMES[3]},${COMMANDRANK_TIMES[4]},${COMMANDRANK_TIMES[5]},${COMMANDRANK_TIMES[6]},\
-${COMMANDRANK_TIMES[7]},${COMMANDRANK_TIMES[8]},${COMMANDRANK_TIMES[9]}];" >> ${HTMLFILE}
 }
 exportDailyLoginTimes(){
 echo "var login_times_day=[${DAYLOGIN[0]},${DAYLOGIN[1]},${DAYLOGIN[2]},${DAYLOGIN[3]},${DAYLOGIN[4]},${DAYLOGIN[5]},\
@@ -224,8 +225,7 @@ echo "<html><head><meta http-equiv='content-Type' content='text/html; charset=UT
 exportDailyLoginTimes
 exportWeeklyLoginTimes
 echo "var total_commands = $TOTAL;"           >> ${HTMLFILE}
-exportCommandRank
-exportLoginAndSpaceRank
+exportLoginSpaceCommandRank
 
 echo "</script>
       </head>
