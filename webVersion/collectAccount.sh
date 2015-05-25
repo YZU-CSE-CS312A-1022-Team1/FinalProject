@@ -1,15 +1,15 @@
 #!/bin/bash
 
 exportUserAccount(){
-  echo -n "var userlist='[" >> ${JSONFILE}
+  echo -n "var username=[" >> ${JSONFILE}
   for (( i=0; i<${#USERLIST[@]}; i++ )); do
     if [ $i != $((${#USERLIST[@]} -1)) ]; then
-      echo -n "\"${USERLIST[$i]}\"," >> ${JSONFILE}
+      echo -n "'${USERLIST[$i]}', " >> ${JSONFILE}
     else
-      echo -n "\"${USERLIST[$i]}\"" >> ${JSONFILE}
+      echo -n "'${USERLIST[$i]}' " >> ${JSONFILE}
     fi
   done
-  echo "]';" >> ${JSONFILE}
+  echo "];" >> ${JSONFILE}
 }
 
 DIR="results"

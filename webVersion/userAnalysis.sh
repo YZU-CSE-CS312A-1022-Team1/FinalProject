@@ -180,15 +180,12 @@ fi
   <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/highcharts/4.1.4/highcharts.js'></script>
   <script type='text/javascript' src='../userList.json'></script>
   <script type='text/javascript' src='../js/userList.js'></script>
-  <script language=javascript>
-  var username = JSON.parse(userlist);
   " >> ${HTMLFILE}
   exportCommandRank
   exportCommandRankTimes
   exportDailyLoginTimes
   exportWeeklyLoginTimes
-  echo "</script>
-  </head>
+  echo "</head>
   <body>
   <div id='menu'>
   <ul>
