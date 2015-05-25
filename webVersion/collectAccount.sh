@@ -36,7 +36,7 @@ exportUserAccount
 
 #Call userAnalysis.sh to analyze user information
 if [ ${#USERLIST[@]} == 0 ]; then
-  echo "No user has login this month, the analyze will stop."
+  echo "No user login in this month, analyze will stop."
 else
   for ACCOUNT in ${USERLIST}
   do
