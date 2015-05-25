@@ -38,7 +38,7 @@ exportUserAccount
 if [ ${#USERLIST[@]} == 0 ]; then
   echo "No user login in this month, analyze will stop."
 else
-  for (( i=0; i<${#USERLIST[@]}; i++ )); do
+  for (( i=0; i<${#USERLIST[@]}; i++ ));
   do
     ./../userAnalysis.sh ${USERLIST[$i]}
   done
