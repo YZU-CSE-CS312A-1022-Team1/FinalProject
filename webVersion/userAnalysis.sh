@@ -96,6 +96,21 @@ countWeeklyLoginTimes(){
     esac
   done
 }
+#choose latest hestory
+chooseCMDHistiryFile(){
+  if [ ${HOME}/.bash_history -nt ${HOME}/.history ] && [ ${HOME}/.bash_history -nt ${HOME}/.histfile ]\
+    && [ ${HOME}/.bash_history -nt ${HOME}/.sh_history ]; then
+      LATESTHISTORY=`echo "${HOME}/.bash_history"`
+  elif [ ${HOME}/.history -nt ${HOME}/.bash_history ] && [ ${HOME}/.history -nt ${HOME}/.histfile ] \
+    && [ ${HOME}/.history -nt ${HOME}/.sh_history ]; then
+      LATESTHISTORY=`echo "${HOME}/.history"`
+  elif [ ${HOME}/.histfile -nt ${HOME}/.bash_history ] && [ ${HOME}/.histfile -nt ${HOME}/.history ]\
+    && [ ${HOME}/.histfile -nt ${HOME}/.sh_history ]; then
+      LATESTHISTORY=`echo "${HOME}/.histfile"`
+  else
+    LATESTHISTORY=`echo "${HOME}/.sh_history"`
+  fi
+}
 
 #generate a directory to place the pages
 DIRECTORY="userInfo"
@@ -124,20 +139,7 @@ if [ -d ${HOME} ]; then
   NUMOFFLE=`find ${HOME} -type f | wc -l | tr -d ' '`
   SPACE="`du -h -d 0 ${HOME} | awk '{print $1}'`B"
 
-  #choose latest hestory
-  if [ ${HOME}/.bash_history -nt ${HOME}/.history ] && [ ${HOME}/.bash_history -nt ${HOME}/.histfile ]\
-    && [ ${HOME}/.bash_history -nt ${HOME}/.sh_history ]; then
-    LATESTHISTORY=`echo "${HOME}/.bash_history"`
-  elif [ ${HOME}/.history -nt ${HOME}/.bash_history ] && [ ${HOME}/.history -nt ${HOME}/.histfile ] \
-    && [ ${HOME}/.history -nt ${HOME}/.sh_history ]; then
-    LATESTHISTORY=`echo "${HOME}/.history"`
-  elif [ ${HOME}/.histfile -nt ${HOME}/.bash_history ] && [ ${HOME}/.histfile -nt ${HOME}/.history ]\
-    && [ ${HOME}/.histfile -nt ${HOME}/.sh_history ]; then
-    LATESTHISTORY=`echo "${HOME}/.histfile"`
-  else
-    LATESTHISTORY=`echo "${HOME}/.sh_history"`
-  fi
-
+  chooseCMDHistiryFile
   TOTALCOMMAND=`wc -l ${LATESTHISTORY} | awk '{print $1}'`
   FAVCOMMAND=`cat -v ${LATESTHISTORY} | sed 's/\^@//g' | sed 's/\^A//g' | sed 's/\M-//g' | sed '/^$/d' | \
               awk '{print $1}'| sed '/#/d' | sort | uniq -c | sort -nr | head -n 10`
