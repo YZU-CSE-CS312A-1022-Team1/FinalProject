@@ -44,7 +44,6 @@ echo "<html><head><meta http-equiv='content-Type' content='text/html; charset=UT
       <script type='text/javascript' src='userList.json'></script>
       <script language=javascript>
      " >> ${HTMLFILE}
-echo "var username = JSON.parse(userlist);" >> ${HTMLFILE}
 echo -n "var date=[" >> ${HTMLFILE}
 for (( i=0; i<${#DATELIST[@]}; i++ )); do
   if [ $i != $((${#DATELIST[@]} -1)) ]; then

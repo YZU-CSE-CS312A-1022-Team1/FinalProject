@@ -86,9 +86,6 @@ TRAFFIC_MONTH=$(echo ${TRAFFIC}| \
         <script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js'></script>
         <script type='text/javascript' src='userList.json'></script>
         <script type='text/javascript' src='js/userList.js'></script>
-        <script language=javascript>
-        var username = JSON.parse(userlist);
-        </script>
         </head>
         <body>
         <div id='menu'>

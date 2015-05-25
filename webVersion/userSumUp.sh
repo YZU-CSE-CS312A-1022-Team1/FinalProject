@@ -218,7 +218,6 @@ echo "<html><head><meta http-equiv='content-Type' content='text/html; charset=UT
       <script type='text/javascript' src='js/userList.js'></script>
       <script type='text/javascript' src='js/userRank.js'></script>
       <script language=javascript>
-      var username = JSON.parse(userlist);
       " >> ${HTMLFILE}
 
 echo "var total_commands = $TOTAL;"           >> ${HTMLFILE}
