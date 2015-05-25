@@ -183,12 +183,14 @@ echo "
       <script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/highcharts/4.1.4/highcharts.js'></script>
       <script type='text/javascript' src='../userList.json'></script>
       <script type='text/javascript' src='../js/userList.js'></script>
+      <script language=javascript>
      " >> ${HTMLFILE}
 exportCommandRank
 exportCommandRankTimes
 exportDailyLoginTimes
 exportWeeklyLoginTimes
 echo "
+      </script>
       </head>
       <body>
       <div id='menu'>
