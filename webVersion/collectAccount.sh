@@ -24,7 +24,7 @@ fi
 #Determine whether executor is root or not
 #Get user accounts login in this month
 if [ `whoami` == "root" ]; then
-  USERLIST=$(last | awk '{if (( NF >= 10 ) && ($1 != "reboot")) print $1}'| sort -r | uniq)
+  USERLIST=(`last | awk '{if (( NF >= 10 ) && ($1 != "reboot")) print $1}'| sort -r | uniq`)
   NUMOFUSER=${#USERLIST[@]}
   echo "program will analyze $NUMOFUSER user who has login in this month."
   echo "please wait "
@@ -38,9 +38,9 @@ exportUserAccount
 if [ ${#USERLIST[@]} == 0 ]; then
   echo "No user login in this month, analyze will stop."
 else
-  for ACCOUNT in ${USERLIST}
+  for (( i=0; i<${#USERLIST[@]}; i++ )); do
   do
-    ./../userAnalysis.sh ${ACCOUNT}
+    ./../userAnalysis.sh ${USERLIST[$i]}
   done
 fi
 echo -e "\nAnalysis has been completed!"
