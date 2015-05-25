@@ -224,13 +224,17 @@ fi
   <div id='login_in_week' style='width: 700px; height: 250px; margin: 0 0 0 0px'></div>
   </td></tr>
   </table>
-  <table><tr><td colspan='2'><h3>Most commonly used command</h3></td></tr>
-  <tr><td colspan='2'>(analyzed by last $TOTALCOMMAND commands in record):</td></tr>
-  <tr><td><br>
-  <div id='user_command_chart' style='width: 800px; height: 350px; margin: 0 0 0 0px' ></div>
-  </td></tr>
-  </table>
-  <br>
+  " >> ${HTMLFILE}
+  if [ -d ${HOME} ]; then
+    echo "<table><tr><td colspan='2'><h3>Most commonly used command</h3></td></tr>
+    <tr><td colspan='2'>(analyzed by last $TOTALCOMMAND commands in record):</td></tr>
+    <tr><td><br>
+    <div id='user_command_chart' style='width: 800px; height: 350px; margin: 0 0 0 0px' ></div>
+    </td></tr>
+    </table>
+    " >> ${HTMLFILE}
+  fi
+  echo "<br>
   <table><tr><td colspan='6'><h3>Currently running process:</h3></td></tr>
   $CURRENTPROCESS
   </table>
