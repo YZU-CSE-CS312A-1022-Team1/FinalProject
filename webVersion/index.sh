@@ -14,7 +14,8 @@ fi
 USERLOGIN=`last | awk '{if($8 == "still"){print $1}}' | uniq | wc -l `
 
 #add uptime
-SYSTIME=`uptime | awk '{if(NF==12){print $2" "$3" "$4" "$5 } else if(NF==11){print $2" "$3" "$4} else if(NF==10){print $2" "$3}}' | sed 's/,//g'`
+SYSTIME=`uptime | awk '{if(NF==13){print $2,$3,$4,$5,$6 }else if(NF==12){print $2,$3,$4,$5 } \
+         else if(NF==11){print $2,$3,$4}else if(NF==10){print $2,$3}}' | sed 's/,//g'`
 
 #Mem info
 if [ `uname` = "Linux" ];then
@@ -62,7 +63,8 @@ HOSTNAME=`hostname -s`
 SYSNAME=`uname -s`
 SYSPLATFORM=`uname -m`
 KERNELVERSION=`uname -r`
-LOADAVG=`uptime | awk '{if(NF==12){print $10" "$11" "$12} else if(NF==11){print $9" "$10" "$11} else if(NF==10){print $8" "$9" "$10}}'`
+LOADAVG=`uptime | awk '{if(NF==13){print $11,$12,$13}else if(NF==12){print $10,$11,$12} \
+         else if(NF==11){print $9,$10,$11}else if(NF==10){print $8,$9,$10}}'`
 FILESYS_HEAD=$(df -h /etc |sed -n '1p'| awk '{print $1 "</td><td align=right width=120>" $2 "</td><td align=right width=120>" \
              $3 "</td><td align=right width=120>"$4"</td><td align=right width=120>" $5"</td><td align=right width=120>" $6}')
 FILESYS_CONTENT=$(df -h /etc |sed -n '2p'| awk '{print $1 "</td><td align=right width=120>" $2 "</td><td align=right width=120>" \
