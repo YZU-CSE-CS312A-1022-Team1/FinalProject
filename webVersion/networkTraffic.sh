@@ -11,9 +11,10 @@ fi
 ALLUSER=`last | awk '{if (( NF >= 10 ) && ($1 != "reboot")) print $1}'| sort | uniq`
 USERLIST=($ALLUSER)
 
+YEAR=`date +"%Y"`
 MONTH=`date +"%m"`
 DAYOFMONTH=`date +"%d"`
-TRAFFIC=`vnstat -d | grep ${MONTH}/ | awk '{if($3 == "KiB"){ print $1" "$2/1024" "$5" "$6" "$8" "$9" "$11} \
+TRAFFIC=`vnstat -d | grep "${MONTH}/../${YEAR}" | awk '{if($3 == "KiB"){ print $1" "$2/1024" "$5" "$6" "$8" "$9" "$11} \
          else{print $1" "$2" "$5" "$6" "$8" "$9" "$11}}' | awk '{if($4=="KiB"){print $1" "$2" "$3/1024" "$5" "$6" "$7} \
          else{print $1" "$2" "$3" "$5" "$6" "$7}}' | awk '{if($5=="KiB"){print $1" "$2" "$3" "$4/1024" "$6} \
          else{print $1" "$2" "$3" "$4" "$6}}'`
